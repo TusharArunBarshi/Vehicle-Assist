@@ -1,0 +1,190 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dealer Page - Car Selling Website</title>
+    <link rel="stylesheet" href="del.css" />
+  </head>
+
+  <body>
+    <!-- Navigation Bar -->
+    <header>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="our fleet.html">Our Fleet</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="login.html">Login</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Dealer Login Section -->
+    <section id="dealer-login">
+      <!-- <div class="container">
+        <h2>Dealer Login</h2>
+        <form action="/dealer-login" method="POST">
+          <label for="dealer-email">Email:</label>
+          <input
+            type="email"
+            id="dealer-email"
+            name="dealer-email"
+            placeholder="Enter your email"
+            required
+          />
+
+          <label for="dealer-password">Password:</label>
+          <input
+            type="password"
+            id="dealer-password"
+            name="dealer-password"
+            placeholder="Enter your password"
+            required
+          />
+
+          <button type="submit">Login</button>
+        </form>
+      </div> -->
+      <div class="container">
+        <h2>Dealer Login</h2>
+        <form id="login-form">
+          <label for="dealer-email">Email:</label>
+          <input
+            type="email"
+            id="dealer-email"
+            name="dealer-email"
+            placeholder="Enter your email"
+            required
+          />
+
+          <label for="dealer-password">Password:</label>
+          <input
+            type="password"
+            id="dealer-password"
+            name="dealer-password"
+            placeholder="Enter your password"
+            required
+          />
+
+          <button type="submit">Login</button>
+          <p id="error-message" style="color: red; display: none">
+            Invalid email or password.
+          </p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Add Car for Sale Section -->
+    <!-- <section id="add-car">
+      <div class="container">
+        <h2>Add Your Car for Sale</h2>
+        <form action="/add-car" method="POST" enctype="multipart/form-data">
+          <label for="car-make">Car Name:</label>
+          <input
+            type="text"
+            id="car-make"
+            name="car-make"
+            placeholder="Enter car make"
+            required
+          />
+
+          <label for="car-model">Car Model:</label>
+          <input
+            type="text"
+            id="car-model"
+            name="car-model"
+            placeholder="Enter car model"
+            required
+          />
+
+          <label for="car-year">Car Year:</label>
+          <input
+            type="number"
+            id="car-year"
+            name="car-year"
+            placeholder="Enter car year"
+            required
+          />
+
+          <label for="car-price">Price:</label>
+          <input
+            type="number"
+            id="car-price"
+            name="car-price"
+            placeholder="Enter car price"
+            required
+          />
+
+          <label for="car-description">Car Description:</label>
+          <textarea
+            id="car-description"
+            name="car-description"
+            placeholder="Provide a description of the car"
+            required
+          ></textarea>
+
+          <label for="car-photos">Car Photos:</label>
+          <input
+            type="file"
+            id="car-photos"
+            name="car-photos"
+            multiple
+            required
+          />
+
+          <button type="submit">Add Car</button>
+        </form>
+      </div>
+    </section> -->
+
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-column about">
+          <h3>About Vehicle Preference Matching</h3>
+          <p>
+            We are dedicated to helping you find the perfect vehicle tailored to
+            your needs. Our intelligent chatbot uses advanced algorithms to
+            match you with the best car options, ensuring a seamless and
+            personalized car-buying experience.
+          </p>
+        </div>
+        <div class="footer-column links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="footer-column contact">
+          <h3>Contact Us</h3>
+          <p>Email: support@vehiclematching.com</p>
+          <p>Phone: +91 12345 67890</p>
+          <p>Address: 123, Car Street, Auto City, India</p>
+        </div>
+        <div class="footer-column social">
+          <h3>Follow Us</h3>
+          <ul>
+            <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
+            <li><a href="https://twitter.com" target="_blank">Twitter</a></li>
+            <li>
+              <a href="https://instagram.com" target="_blank">Instagram</a>
+            </li>
+            <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Vehicle Preference Matching. All Rights Reserved.</p>
+      </div>
+    </footer>
+    <script src="script.js"></script>
+    <script src="dealer_login.js"></script>
+    <script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2025/02/20/14/20250220141332-V9KIV1LI.js"></script>
+  </body>
+</html>

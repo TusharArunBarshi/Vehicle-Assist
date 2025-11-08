@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Fleet - Vehicle Preference Chatbot</title>
+    <link rel="stylesheet" href="our fleet.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <header>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="our fleet.html">Our Fleet</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="login.html">Login</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Fleet Section -->
+    <section id="fleet">
+      <h1>Our Vehicle Fleet</h1>
+      <h2>
+        We provide our customers with the most incredible driving emotions.<br />That's
+        why we have only world-class vehicles in our fleet.
+      </h2>
+
+      <div class="filter-section">
+        <label>Category:</label>
+        <select id="category" onchange="filterVehicles()">
+          <option value="">All Categories</option>
+          <option value="Car">Car</option>
+          <option value="Bike">Bike</option>
+          <option value="Scooter">Scooter</option>
+        </select>
+
+        <label>Fuel Type:</label>
+        <select id="fuelType" onchange="filterVehicles()">
+          <option value="">All Fuel Types</option>
+          <option value="Petrol">Petrol</option>
+          <option value="Diesel">Diesel</option>
+          <option value="Electric">Electric</option>
+        </select>
+      </div>
+
+      <div class="fleet-container" id="vehicleList"></div>
+    </section>
+
+    <!-- Compare Section -->
+    <section id="compare">
+      <h2>Compare Vehicles</h2>
+      <div class="compare-container">
+        <select id="vehicle1">
+          <option value="honda-city">Honda City</option>
+          <option value="maruti-swift">Brezza</option>
+          <option value="hyundai-creta">Hyundai Creta</option>
+          <option value="mahindra-thar">Mahindra Thar</option>
+          <option value="yamaha-r15">Yamaha R15</option>
+          <option value="ktm-rc390">KTM RC390</option>
+          <option value="royal-enfield-himalayan">
+            Royal Enfield Himalayan
+          </option>
+          <option value="suzuki-gixxer">Suzuki Gixxer</option>
+          <option value="toyota-camry">Toyota Camry</option>
+          <option value="tesla-model-3">Tesla Model 3</option>
+        </select>
+        <select id="vehicle2">
+          <option value="honda-city">Honda City</option>
+          <option value="maruti-swift">Brezza</option>
+          <option value="hyundai-creta">Hyundai Creta</option>
+          <option value="mahindra-thar">Mahindra Thar</option>
+          <option value="yamaha-r15">Yamaha R15</option>
+          <option value="ktm-rc390">KTM RC390</option>
+          <option value="royal-enfield-himalayan">
+            Royal Enfield Himalayan
+          </option>
+          <option value="suzuki-gixxer">Suzuki Gixxer</option>
+          <option value="toyota-camry">Toyota Camry</option>
+          <option value="tesla-model-3">Tesla Model 3</option>
+        </select>
+        <button onclick="compareVehicles()">Compare</button>
+      </div>
+      <div id="compare-results"></div>
+    </section>
+
+    <!-- Cost Calculator Section -->
+    <section id="cost-calculator">
+      <h2>Calculate Your Car Ownership Cost</h2>
+      <form id="emiForm">
+        <div class="input-group">
+          <label for="carPrice">Car Price (₹):</label>
+          <input
+            type="number"
+            id="carPrice"
+            placeholder="Enter price"
+            required
+          />
+        </div>
+        <div class="input-group">
+          <label for="loanYears">Loan Duration (Years):</label>
+          <select id="loanYears">
+            <option value="3">3</option>
+            <option value="5">5</option>
+            <option value="7">7</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="interestRate">Interest Rate (%):</label>
+          <input
+            type="number"
+            id="interestRate"
+            placeholder="Enter interest rate"
+            step="0.1"
+            required
+          />
+        </div>
+        <button type="button" onclick="calculateEMI()">Calculate EMI</button>
+        <p id="emiResult"></p>
+      </form>
+    </section>
+   
+    <!-- JavaScript -->
+    <script>
+      const vehicles = [
+        // Cars
+        {
+          name: "Kia Seltos",
+          category: "Car",
+          fuel: "Diesel",
+          range: 750,
+          image: "kia.jpg",
+          unit: "km/liter",
+          details:
+            "The Kia Seltos is a versatile SUV with a 1.5L diesel engine producing 113 hp. It offers bold design, a tech-loaded interior with a 10.25-inch display, and comfort features, making it a strong contender in its class.",
+        },
+        {
+          name: "Ford EcoSport",
+          category: "Car",
+          fuel: "Petrol",
+          range: 620,
+          image: "Ford.jpg",
+          unit: "km/liter",
+          details:
+            "The Ford EcoSport is a compact SUV with a 1.5L petrol engine delivering 120 hp. Known for its rugged appeal, it includes a high ground clearance, SYNC infotainment, and a fun-to-drive nature.",
+        },
+        {
+          name: "Nissan Leaf",
+          category: "Car",
+          fuel: "Electric",
+          range: 80,
+          image: "nissan.jpg",
+          unit: "km/charge",
+          details:
+            "The Nissan Leaf is an affordable electric car for urban commuting. With a 40 kWh battery and 147 hp motor, it provides a practical range, zero emissions, and a compact design for city life.",
+        },
+        {
+          name: "Tata Tiago",
+          category: "Car",
+          fuel: "Petrol",
+          range: 90,
+          image: "tata.jpg",
+          unit: "km/liter",
+          details:
+            "The Tata Tiago is a budget-friendly hatchback with a 1.2L engine producing 85 hp. It offers decent features like a Harman audio system, dual airbags, and a sturdy build, perfect for cost-conscious buyers.",
+        },
+        {
+          name: "Renault Kwid",
+          category: "Car",
+          fuel: "Petrol",
+          range: 200,
+          image: "kwid.jpg",
+          unit: "km/liter",
+          details:
+            "The Renault Kwid is an entry-level car with SUV-inspired styling. Its 1.0L engine delivers 67 hp, complemented by a lightweight body, digital cluster, and affordability, ideal for first-time buyers.",
+        },
+        {
+          name: "Mahindra XUV300",
+          category: "Car",
+          fuel: "Diesel",
+          range: 250,
+          image: "xuv.jpg",
+          unit: "km/liter",
+          details:
+            "The Mahindra XUV300 is a compact SUV with a 1.5L diesel engine generating 115 hp. It boasts top safety ratings, a premium cabin, and features like dual-zone AC, making it a solid family vehicle.",
+        },
+        // Bikes
+        {
+          name: "Revolt RV400",
+          category: "Bike",
+          fuel: "Electric",
+          range: 180,
+          image: "revolt.jpg",
+          unit: "km/charge",
+          details:
+            "The Revolt RV400 is India’s first electric motorcycle with a 3 kW motor. It features smart tech, swappable batteries, and eco-friendly riding for urban commuters.",
+        },
+        {
+          name: "Hero Splendor",
+          category: "Bike",
+          fuel: "Petrol",
+          range: 500,
+          image: "splendor.jpg",
+          unit: "km/liter",
+          details:
+            "The Hero Splendor is a reliable commuter bike with a 97.2cc engine delivering 8 hp. Known for excellent mileage and durability, it’s a top choice for daily use.",
+        },
+        {
+          name: "Suzuki Gixxer",
+          category: "Bike",
+          fuel: "Petrol",
+          range: 80,
+          image: "suzuki-gixxer.jpg",
+          unit: "km/liter",
+          details:
+            "The Suzuki Gixxer is a stylish bike with a 155cc engine producing 13.6 hp. It offers a sporty edge, LED headlamp, and smooth performance for city riding.",
+        },
+        {
+          name: "Bajaj Platina",
+          category: "Bike",
+          fuel: "Petrol",
+          range: 90,
+          image: "platina.jpg",
+          unit: "km/liter",
+          details:
+            "The Bajaj Platina is an economical bike with a 102cc engine delivering 7.9 hp. It’s designed for daily commuting with comfort suspension and great fuel efficiency.",
+        },
+        {
+          name: "Honda CB Shine",
+          category: "Bike",
+          fuel: "Petrol",
+          range: 200,
+          image: "shine.jpg",
+          unit: "km/liter",
+          details:
+            "The Honda CB Shine is a smooth commuter motorcycle with a 124cc engine producing 10.5 hp. It offers reliability, silent start, and decent mileage for urban use.",
+        },
+        // Scooters
+        {
+          name: "Ola Electric",
+          category: "Scooter",
+          fuel: "Electric",
+          range: 170,
+          image: "ola.jpg",
+          unit: "km/charge",
+          details:
+            "The Ola Electric scooter features a 8.5 kW motor with bold colors. It offers a futuristic design, app connectivity, and a spacious under-seat storage.",
+        },
+        {
+          name: "Yamaha Fascino",
+          category: "Scooter",
+          fuel: "Petrol",
+          range: 260,
+          image: "fascino.jpg",
+          unit: "km/liter",
+          details:
+            "The Yamaha Fascino is a stylish scooter with a 125cc engine producing 8.2 hp. It combines retro charm with modern efficiency and a lightweight frame.",
+        },
+        {
+          name: "TVS Jupiter",
+          category: "Scooter",
+          fuel: "Petrol",
+          range: 270,
+          image: "jupiter.jpg",
+          unit: "km/liter",
+          details:
+            "The TVS Jupiter is a comfortable scooter with a 109.7cc engine delivering 7.4 hp. It offers practical features like external fuel fill and a spacious seat.",
+        },
+        {
+          name: "Simple One",
+          category: "Scooter",
+          fuel: "Electric",
+          range: 200,
+          image: "simple.jpg",
+          unit: "km/charge",
+          details:
+            "The Simple One is a high-range electric scooter with a 4.8 kW motor. It features a sleek design, portable battery, and a top speed of 105 km/h.",
+        },
+        {
+          name: "Vespa VXL",
+          category: "Scooter",
+          fuel: "Petrol",
+          range: 80,
+          image: "vxl.jpg",
+          unit: "km/liter",
+          details:
+            "The Vespa VXL is a premium scooter with a 125cc engine producing 9.9 hp. It offers Italian flair, a monocoque chassis, and a luxurious feel.",
+        },
+        {
+          name: "Hero Electric Photon",
+          category: "Scooter",
+          fuel: "Electric",
+          range: 90,
+          image: "photon.jpg",
+          unit: "km/charge",
+          details:
+            "The Hero Electric Photon is an affordable electric scooter with a 1.8 kW motor. It’s designed for daily use with a simple design and low running costs.",
+        },
+      ];
+
+      function displayVehicles(filteredVehicles) {
+        const vehicleList = document.getElementById("vehicleList");
+        vehicleList.innerHTML = "";
+
+        filteredVehicles.forEach((vehicle, index) => {
+          const vehicleDiv = document.createElement("div");
+          vehicleDiv.className = "vehicle-item";
+          vehicleDiv.style.animationDelay = `${index * 0.1}s`;
+          vehicleDiv.innerHTML = `
+                    <img src="${
+                      vehicle.image ||
+                      "https://via.placeholder.com/200x150?text=No+Image"
+                    }" alt="${vehicle.name}" class="vehicle-image">
+                    <div class="vehicle-short-desc">
+                        <h3>${vehicle.name}</h3>
+                        <p><strong>Category:</strong> ${vehicle.category}</p>
+                        <p><strong>Fuel:</strong> ${vehicle.fuel}</p>
+                        <p><strong>Range:</strong> ${vehicle.range} ${
+            vehicle.unit
+          }</p>
+                    </div>
+                    <div class="vehicle-details" id="details-${index}">
+                        <p>${vehicle.details}</p>
+                    </div>
+                `;
+
+          vehicleDiv.addEventListener("click", () => {
+            const details = document.getElementById(`details-${index}`);
+            const isActive = details.classList.contains("active");
+            document.querySelectorAll(".vehicle-details").forEach((detail) => {
+              detail.classList.remove("active");
+            });
+            if (!isActive) {
+              details.classList.add("active");
+            }
+          });
+
+          vehicleList.appendChild(vehicleDiv);
+        });
+      }
+
+      function filterVehicles() {
+        const category = document.getElementById("category").value;
+        const fuelType = document.getElementById("fuelType").value;
+
+        let filteredVehicles = vehicles;
+
+        if (category) {
+          filteredVehicles = filteredVehicles.filter(
+            (vehicle) => vehicle.category === category
+          );
+        }
+
+        if (fuelType) {
+          filteredVehicles = filteredVehicles.filter(
+            (vehicle) => vehicle.fuel === fuelType
+          );
+        }
+
+        displayVehicles(filteredVehicles);
+      }
+
+      displayVehicles(vehicles);
+
+      const vehicleDetails = {
+        "honda-city": {
+          name: "Honda City",
+          price: "₹12 Lakh",
+          mileage: "17 km/l",
+          engine: "1498cc",
+          image: "honda-city.jpg",
+        },
+        "maruti-swift": {
+          name: "Maruti Swift",
+          price: "₹8 Lakh",
+          mileage: "22 km/l",
+          engine: "1197cc",
+          image: "maruti-swift.jpg",
+        },
+        "hyundai-creta": {
+          name: "Hyundai Creta",
+          price: "₹14 Lakh",
+          mileage: "16 km/l",
+          engine: "1497cc",
+          image: "hyundai-creta.jpg",
+        },
+        "mahindra-thar": {
+          name: "Mahindra Thar",
+          price: "₹16 Lakh",
+          mileage: "15 km/l",
+          engine: "2184cc",
+          image: "mahindra-thar.jpg",
+        },
+        "yamaha-r15": {
+          name: "Yamaha R15",
+          price: "₹1.5 Lakh",
+          mileage: "40 km/l",
+          engine: "155cc",
+          image: "r15.jpg",
+        },
+        "ktm-rc390": {
+          name: "KTM RC390",
+          price: "₹3.0 Lakh",
+          mileage: "35 km/l",
+          engine: "373cc",
+          image: "ktm-rc390.jpg",
+        },
+        "royal-enfield-himalayan": {
+          name: "Royal Enfield Himalayan",
+          price: "₹2.5 Lakh",
+          mileage: "40 km/l",
+          engine: "411cc",
+          image: "royal-enfield-himalayan.jpg",
+        },
+        "suzuki-gixxer": {
+          name: "Suzuki Gixxer",
+          price: "₹1.2 Lakh",
+          mileage: "50 km/l",
+          engine: "155cc",
+          image: "suzuki-gixxer.jpg",
+        },
+        "toyota-camry": {
+          name: "Toyota Camry",
+          price: "₹30 Lakh",
+          mileage: "12 km/l",
+          engine: "2500cc",
+          image: "toyota-camry.jpg",
+        },
+        "tesla-model-3": {
+          name: "Tesla Model 3",
+          price: "₹35 Lakh",
+          mileage: "Electric",
+          engine: "Electric",
+          image: "tesla.jpg",
+        },
+      };
+
+      function compareVehicles() {
+        const vehicle1Key = document.getElementById("vehicle1").value;
+        const vehicle2Key = document.getElementById("vehicle2").value;
+        const vehicle1 = vehicleDetails[vehicle1Key];
+        const vehicle2 = vehicleDetails[vehicle2Key];
+        const resultHTML = `
+                <h3>Comparison Result</h3>
+                <table border="0">
+                    <tr><th>Feature</th><th>${vehicle1.name}</th><th>${vehicle2.name}</th></tr>
+                    <tr><td>Price</td><td>${vehicle1.price}</td><td>${vehicle2.price}</td></tr>
+                    <tr><td>Mileage</td><td>${vehicle1.mileage}</td><td>${vehicle2.mileage}</td></tr>
+                    <tr><td>Engine</td><td>${vehicle1.engine}</td><td>${vehicle2.engine}</td></tr>
+                    <tr><td>Image</td><td><img src="${vehicle1.image}" width="150"></td><td><img src="${vehicle2.image}" width="150"></td></tr>
+                </table>
+            `;
+        document.getElementById("compare-results").innerHTML = resultHTML;
+      }
+
+      function calculateEMI() {
+        const carPrice = parseFloat(document.getElementById("carPrice").value);
+        const loanYears = parseInt(document.getElementById("loanYears").value);
+        const interestRate = parseFloat(
+          document.getElementById("interestRate").value
+        );
+
+        if (
+          isNaN(carPrice) ||
+          isNaN(loanYears) ||
+          isNaN(interestRate) ||
+          carPrice <= 0 ||
+          interestRate < 0
+        ) {
+          alert("Please enter valid values for all fields.");
+          return;
+        }
+
+        const monthlyInterestRate = interestRate / 100 / 12;
+        const totalMonths = loanYears * 12;
+        const emi =
+          (carPrice *
+            monthlyInterestRate *
+            Math.pow(1 + monthlyInterestRate, totalMonths)) /
+          (Math.pow(1 + monthlyInterestRate, totalMonths) - 1);
+
+        const resultElement = document.getElementById("emiResult");
+        resultElement.textContent = `Estimated EMI: ₹${emi.toFixed(
+          2
+        )} per month`;
+        resultElement.classList.add("active");
+      }
+    </script>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-column about">
+          <h3>About Vehicle Preference Matching</h3>
+          <p>
+            We are dedicated to helping you find the perfect vehicle tailored to
+            your needs. Our intelligent chatbot uses advanced algorithms to
+            match you with the best car options, ensuring a seamless and
+            personalized car-buying experience.
+          </p>
+        </div>
+        <div class="footer-column links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="footer-column contact">
+          <h3>Contact Us</h3>
+          <p>Email: support@vehiclematching.com</p>
+          <p>Phone: +91 12345 67890</p>
+          <p>Address: 123, Car Street, Auto City, India</p>
+        </div>
+        <div class="footer-column social">
+          <h3>Follow Us</h3>
+          <ul>
+            <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
+            <li><a href="https://twitter.com" target="_blank">Twitter</a></li>
+            <li>
+              <a href="https://instagram.com" target="_blank">Instagram</a>
+            </li>
+            <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Vehicle Preference Matching. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Botpress Chatbot Integration -->
+    <!-- <script type="module" src="firebase.js"></script> -->
+    <script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2025/02/20/14/20250220141332-V9KIV1LI.js"></script>
+  </body>
+</html>

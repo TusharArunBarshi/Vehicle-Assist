@@ -1,0 +1,31 @@
+<script>
+  function toggleChatbot() {
+    const chatbot = document.getElementById('chatbot');
+    chatbot.classList.toggle('open');  // Toggle the 'open' class to expand/shrink the chatbot
+  }
+
+  function closeChatbot() {
+    const chatbot = document.getElementById('chatbot');
+    chatbot.classList.remove('open');  // Remove the 'open' class when closing the chatbot
+    chatbot.style.display = 'none';    // Hide the chatbot
+  }
+
+  function sendMessage() {
+    const userInput = document.getElementById('user-input').value;
+    if (userInput.trim() !== '') {
+      const messageContainer = document.createElement('div');
+      messageContainer.classList.add('chatbot-message', 'user-message');
+      messageContainer.innerHTML = `<p>${userInput}</p>`;
+      document.querySelector('.chatbot-body').appendChild(messageContainer);
+      document.getElementById('user-input').value = '';
+
+      // Simple bot reply
+      setTimeout(() => {
+        const botMessage = document.createElement('div');
+        botMessage.classList.add('chatbot-message', 'bot-message');
+        botMessage.innerHTML = `<p>Thanks for reaching out! We have some amazing cars for you!</p>`;
+        document.querySelector('.chatbot-body').appendChild(botMessage);
+      }, 1000);
+    }
+  }
+</script>

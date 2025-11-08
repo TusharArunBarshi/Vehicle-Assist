@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Provide Feedback - Vehicle Preference Matching</title>
+  <link rel="stylesheet" href="feedback.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="our fleet.html">Our Fleet</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Feedback Form Section -->
+  <section class="feedback-page">
+    <h2>Provide Your Feedback</h2>
+    <div class="feedback-form">
+      <form id="feedbackForm" action="submit_feedback.php" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        
+        <label for="message">Feedback:</label>
+        <textarea id="message" name="message" placeholder="Your feedback" required></textarea>
+        
+        <button type="submit" id="submitFeedback">Submit Feedback</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Toast Message Container -->
+  <div id="toast" class="toast hidden">Feedback Submitted Successfully!</div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-column about">
+        <h3>About Vehicle Preference Matching</h3>
+        <p>We are dedicated to helping you find the perfect vehicle tailored to your needs. Our intelligent chatbot uses advanced algorithms to match you with the best car options, ensuring a seamless and personalized car-buying experience.</p>
+      </div>
+      <div class="footer-column links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div class="footer-column contact">
+        <h3>Contact Us</h3>
+        <p>Email: support@vehiclematching.com</p>
+        <p>Phone: +91 12345 67890</p>
+        <p>Address: 123, Car Street, Auto City, India</p>
+      </div>
+      <div class="footer-column social">
+        <h3>Follow Us</h3>
+        <ul>
+          <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
+          <li><a href="https://twitter.com" target="_blank">Twitter</a></li>
+          <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
+          <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Vehicle Preference Matching. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript for Toast and Feedback Submission -->
+  <script>
+    document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+
+      const feedback = {
+        name,
+        email,
+        message,
+        date: new Date().toLocaleDateString(),
+        timestamp: new Date().toISOString() // Store ISO timestamp for expiration check
+      };
+
+      let feedbackList = JSON.parse(localStorage.getItem('feedbackList')) || [];
+      feedbackList.push(feedback);
+      localStorage.setItem('feedbackList', JSON.stringify(feedbackList));
+
+      const toast = document.getElementById('toast');
+      toast.classList.remove('hidden');
+      toast.classList.add('show');
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+        toast.classList.add('hidden');
+      }, 3000);
+
+      this.reset();
+    });
+  </script>
+</body>
+</html>

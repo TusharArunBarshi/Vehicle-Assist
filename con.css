@@ -1,0 +1,310 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #2c3e50, #34495e); /* Dark blue to indigo */
+  color: #fff;  /* White text for better contrast */
+  line-height: 1.6;
+  font-size: 16px;
+  margin-top: 80px; /* Ensure content doesn't get hidden under fixed navbar */
+  scroll-behavior: smooth; /* Smooth scrolling */
+}
+
+/* Navigation Bar */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(44, 62, 80, 0.9); /* More opaque dark background */
+  padding: 1rem 2rem;
+  z-index: 10;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.5s ease-out;
+}
+
+nav ul {
+  list-style-type: none;
+  text-align: center;
+  margin: 0;
+}
+
+nav ul li {
+  display: inline-block;
+  margin: 0 20px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding: 10px;
+  transition: color 0.3s ease, transform 0.3s ease, letter-spacing 0.2s ease;
+}
+
+nav ul li a:hover {
+  color: #f39c12; /* Bright golden color for hover effect */
+  transform: translateY(-5px); /* Subtle lift effect */
+  letter-spacing: 2px; /* Increase space between letters on hover */
+  transition: transform 0.3s ease, letter-spacing 0.3s ease;
+}
+
+/* Logo */
+.logo {
+  position: absolute;
+  top: 1.2rem;
+  left: 2rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: fadeInLogo 1s ease-out;
+}
+
+/* Logo Fade-In Animation */
+@keyframes fadeInLogo {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Add media query for responsiveness */
+@media (max-width: 768px) {
+  nav ul {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+  }
+
+  nav ul li {
+    margin: 10px 0;
+  }
+
+  nav ul li a {
+    font-size: 1.1rem;
+  }
+
+  .logo {
+    left: 1rem;
+    font-size: 1.3rem;
+  }
+}
+
+/* Slide-in Animation for Navbar */
+@keyframes slideIn {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Contact Section */
+.contact {
+  padding: 50px 20px;
+  background: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  margin: 90px auto;
+  max-width: 600px;
+  text-align: center;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.contact:hover {
+  transform: scale(1.04); /* Slight scale effect on hover */
+                                                                                                                          
+}
+
+.contact h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #2c3e50;
+  font-weight: bold;
+  animation: fadeIn 1s ease-out;
+}
+
+.contact p {
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto 30px;
+  color: #555;
+  line-height: 1.8;
+  animation: fadeIn 1s ease-out 0.5s;
+}
+
+.contact-form {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-out 1s;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #f39c12;
+  outline: none;
+  transform: scale(1.05); /* Slight scale effect when focused */
+}
+
+.contact-form button {
+  background-color: #f39c12;
+  color: White;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.contact-form button:hover {
+  background-color: #e67e22;
+  transform: translateY(-3px); /* Slight lifting effect */
+}
+
+/* Footer Styles */
+.site-footer {
+  background-color: #2c3e50;
+  color: #fff;
+  padding: 40px 20px;
+  font-size: 0.9rem;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.footer-column {
+  flex: 1;
+  min-width: 220px;
+  margin: 10px;
+}
+
+.footer-column h3 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  color: #f39c12;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover {
+  color: #e67e22;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.footer-bottom p {
+  margin: 10px 0;
+}
+
+.chatbot-link a {
+  display: inline-block;
+  background-color: #f39c12;
+    padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.chatbot-link a:hover {
+  background-color: #e67e22;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer-column {
+    margin: 20px 0;
+  }
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer-column {
+    margin: 20px 0;
+  }
+}
+
+
+@keyframes slideInImage {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+

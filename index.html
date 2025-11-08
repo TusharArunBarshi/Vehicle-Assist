@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home - Vehicle Preference Matching</title>
+    <link rel="stylesheet" href="in.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <header>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="our fleet.html">Our Fleet</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="login.html">Login</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home">
+      <div class="hero">
+        <h1 class="animated-heading">Discover Your Dream Ride Today!</h1>
+        <p>Unleash the Journey: Find Your Perfect Vehicle with a Single Click.</p>
+        <button class="button-62" onclick="redirectToFleet()">Explore Our Vehicles</button>
+      </div>
+    </section>
+
+    <!-- Featured Vehicles Section -->
+    <section id="advertisements">
+      <h2>Featured Vehicles</h2>
+      <div class="ad-container">
+        <div class="ad">
+          <img src="honda-city.jpg" alt="Honda City" />
+          <h3>Honda City</h3>
+          <p>Price: ₹12 Lakh<br />Efficient & Stylish</p>
+          <a href="https://www.hondacarindia.com/honda-city-5th-generation" class="ad-btn">View Details</a>
+        </div>
+        <div class="ad">
+          <img src="maruti-swift.jpg" alt="Maruti Swift" />
+          <h3>Brezza</h3>
+          <p>Price: ₹8 Lakh<br />Compact & Economical</p>
+          <a href="https://www.googleadservices.com/pagead/aclk?sa=L&ai=DChcSEwjV-5ePmvOLAxVNaw8CHTcMLN8YABAAGgJ0Yg&co=1&gclid=CjwKCAiAiaC-BhBEEiwAjY99qMChk4rKHzZMkWFoRnFDRQ7jZ1iSa_rvCFYb-QkZYccKHVrW4itRcBoC8qIQAvD_BwE&ohost=www.google.com&cid=CAESV-D2EwO5yMN3804qro6a7l3DNqkVYJpi4EypmAFT1PG-E1Vwh_f1uCsQhAzJf_vZQZLrSV7fD5YHSUeJyRx9YkgGkigiGWTgQ1BL-8uSpXKfCHsfQ1lmFw&sig=AOD64_03swmi0yT0RLgbuSCFiVzGvV3Idg&q&adurl&ved=2ahUKEwie64-PmvOLAxVKrlYBHeRZJF0Q0Qx6BAgfEAQ" class="ad-btn">View Details</a>
+        </div>
+        <div class="ad">
+          <img src="r15.JPG" alt="Yamaha R15" />
+          <h3>Yamaha R15</h3>
+          <p>Price: ₹1.5 Lakh<br />Sporty & Agile</p>
+          <a href="https://www.yamaha-motor-india.com/yamaha-r15v4.html" class="ad-btn">View Details</a>
+        </div>
+        <div class="ad">
+          <img src="ktm.jpg" alt="KTM RC390" />
+          <h3>KTM RC390</h3>
+          <p>Price: ₹3.0 Lakh<br />Powerful & Dynamic</p>
+          <a href="https://www.ktmindia.com/ktm-bikes/supersport/ktm-rc-390" class="ad-btn">View Details</a>
+        </div>
+        <div class="ad">
+          <img src="fortuner.jpg" alt="Toyota Fortuner" />
+          <h3>Fortuner</h3>
+          <p>Price: ₹35 Lakh<br />Premium & Rugged</p>
+          <a href="https://www.toyotabharat.com/showroom/fortuner/index-fortuner.html" class="ad-btn">View Details</a>
+        </div>
+      </div>
+    </section>
+<!-- Scroll Animation, Form Submission, and Feedback Display Script -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const sections = document.querySelectorAll("section:not(#home), .site-footer");
+    sections.forEach((section) => {
+      section.classList.add("hidden");
+    });
+
+    const observerOptions = {
+      root: null,
+      threshold: 0.15,
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove("hidden");
+          entry.target.classList.add("animate");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+
+    // Form submission handling
+    document.getElementById('booking-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('user-name').value;
+      const mobile = document.getElementById('mobile').value;
+      const vehicle = document.getElementById('test-vehicle').value;
+      const city = document.getElementById('city').value;
+      
+      console.log('Booking:', { name, mobile, vehicle, city });
+      alert('Test drive booked successfully!');
+      this.reset();
+    });
+
+    // Load and display feedback with 12-hour expiration
+    const feedbackContainer = document.getElementById('feedback-container');
+    let feedbackList = JSON.parse(localStorage.getItem('feedbackList')) || [];
+    const currentTime = Date.now(); // Current time in milliseconds
+    const twelveHours = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
+
+    // Filter out feedback older than 12 hours
+    feedbackList = feedbackList.filter(feedback => {
+      const feedbackTime = new Date(feedback.timestamp).getTime();
+      return (currentTime - feedbackTime) <= twelveHours;
+    });
+
+    // Update localStorage with filtered feedback
+    localStorage.setItem('feedbackList', JSON.stringify(feedbackList));
+
+    if (feedbackList.length === 0) {
+      feedbackContainer.innerHTML = '<p>No feedback submitted yet or all feedback has expired.</p>';
+    } else {
+      feedbackList.forEach(feedback => {
+        const feedbackElement = document.createElement('div');
+        feedbackElement.classList.add('feedback-item');
+        feedbackElement.innerHTML = `
+          <h3>${feedback.name}</h3>
+          <p>${feedback.message}</p>
+          <p class="date">Submitted on: ${feedback.date}</p>
+        `;
+        feedbackContainer.appendChild(feedbackElement);
+      });
+    }
+  });
+</script>
+    <!-- Test Drive Booking Section -->
+    <section id="booking">
+      <h2>Book A Test Drive</h2>
+      <div class="booking-container">
+        <form id="booking-form">
+          <div class="input-group">
+            <label for="user-name">Your Name</label>
+            <input type="text" id="user-name" placeholder="Enter Your Name" required />
+          </div>
+          <div class="input-group">
+            <label for="mobile">Your Mobile No</label>
+            <input type="tel" id="mobile" placeholder="Enter Mobile No." pattern="[0-9]{10}" required />
+          </div>
+          <div class="input-group">
+            <label for="test-vehicle">Select Vehicle</label>
+            <select id="test-vehicle" required>
+              <option value="">Choose a Vehicle</option>
+              <option value="honda-city">Honda City</option>
+              <option value="maruti-swift">Brezza</option>
+              <option value="hyundai-creta">Hyundai Creta</option>
+              <option value="mahindra-thar">Mahindra Thar</option>
+              <option value="yamaha-r15">Yamaha R15</option>
+              <option value="ktm-rc390">KTM RC390</option>
+              <option value="royal-enfield-himalayan">Royal Enfield Himalayan</option>
+              <option value="suzuki-gixxer">Suzuki Gixxer</option>
+              <option value="toyota-camry">Toyota Camry</option>
+              <option value="tesla-model-3">Tesla Model 3</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="city">Select City</label>
+            <select id="city" required>
+              <option value="">Choose a City</option>
+              <option value="Bhiwandi">Bhiwandi</option>
+              <option value="Kalyan">Kalyan</option>
+              <option value="Thane">Thane</option>
+              <option value="Kalwa">Kalwa</option>
+              <option value="Bhayandar">Bhayandar</option>
+              <option value="Mumbra">Mumbra</option>
+              <option value="Navi_Mumbai">Navi Mumbai</option>
+              <option value="Mumbai">Mumbai</option>
+            </select>
+          </div>
+          <button type="submit" id="book-drive-btn">Book A Drive</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Feedback Display Section -->
+    <section id="feedback-display">
+      <h2>Customer Feedback</h2>
+      <div class="feedback-container" id="feedback-container">
+        <!-- Feedback will be dynamically inserted here -->
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-column about">
+          <h3>About Vehicle Preference Matching</h3>
+          <p>We are dedicated to helping you find the perfect vehicle tailored to your needs. Our intelligent chatbot uses advanced algorithms to match you with the best car options, ensuring a seamless and personalized car-buying experience.</p>
+        </div>
+        <div class="footer-column links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="footer-column contact">
+          <h3>Contact Us</h3>
+          <p>Email: support@vehiclematching.com</p>
+          <p>Phone: +91 12345 67890</p>
+          <p>Address: 123, Car Street, Auto City, India</p>
+        </div>
+        <div class="footer-column social">
+          <h3>Follow Us</h3>
+          <ul>
+            <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
+            <li><a href="https://twitter.com" target="_blank">Twitter</a></li>
+            <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
+            <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Vehicle Preference Matching. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+      function redirectToFleet() {
+        window.location.href = "our fleet.html";
+      }
+    </script>
+    <script type="module" src="firebase-script-booking.js"></script>
+    <script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2025/02/20/14/20250220141332-V9KIV1LI.js"></script>
+    <script src="script.js"></script>
+    
+  </body>
+</html>
